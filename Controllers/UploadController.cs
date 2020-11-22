@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using Peoples.Classes;
 
 namespace Peoples.Controllers
 {
@@ -16,7 +16,11 @@ namespace Peoples.Controllers
 		[HttpGet]
 		public ActionResult UploadFile( )
 		{
-			return View( );
+			SignInStatus signInStatus = SignInStatus.Failure;
+			if ( TempData[ "signInStatus" ] != null )
+				signInStatus = ( SignInStatus )TempData[ "signInStatus" ];
+			
+			return View( signInStatus );
 		}
 
 		[HttpPost]
@@ -24,38 +28,22 @@ namespace Peoples.Controllers
 		{
 			try
 			{
-				List<string> retStrings = new List<string>( );
-
 				if ( file.ContentLength > 0 )
 				{
-					string _FileName = Path.GetFileName( file.FileName );
-					string fileExtention = Path.GetExtension( _FileName );
+					ApiCaller apiCaller = new ApiCaller( );
+					var dataSourceData = apiCaller.ProcessFile( file );
 
-					if ( fileExtention.Equals( ".txt" ) )
-					{
-						using ( StreamReader sr = new StreamReader( file.InputStream ) )
-						{
-							string line;
-							while ( ( line = sr.ReadLine( ) ) != null )
-							{
-								retStrings.Add( line );
-							}
+					TempData[ "dataSourceData" ] = dataSourceData;
 
-							sr.Close( );
-						}
-					}
-
-					//file.SaveAs( _path );
+					return RedirectToAction( "Index", "Popi" );
 				}
-
-				ViewBag.Message = "File Uploaded Successfully!!";
-				return View( );
 			}
 			catch
 			{
 				ViewBag.Message = "File upload failed!!";
-				return View( );
 			}
+
+			return View( );
 		}
 	}
 }

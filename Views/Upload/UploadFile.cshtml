@@ -1,21 +1,28 @@
-﻿
+﻿@using Microsoft.AspNet.Identity.Owin
+@model Microsoft.AspNet.Identity.Owin.SignInStatus
+
 @{
-    ViewBag.Title = "UploadFile";
+	ViewBag.Title = "UploadFile";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>UploadFile</h2>
 
-@using(Html.BeginForm("UploadFile","Upload", FormMethod.Post, new { enctype="multipart/form-data"}))  
-{  
-      
-    <div>  
-        @Html.TextBox("file", "", new {  type= "file"}) <br />  
-   
-        <input type="submit" value="Upload" />  
-   
-        @ViewBag.Message  
-   
-    </div>  
-      
-      
-}  
+@using ( Html.BeginForm( "UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" } ) )
+{
+	<div>
+		@Html.TextBox( "file", "", new { type = "file" } ) <br />
+
+		@if ( Model != null && Model == SignInStatus.Success )
+		{
+			<input type="submit" value="Upload" />
+		}
+		else
+		{
+			<span>You need to login before you can upload a file!</span>
+		}
+
+		@ViewBag.Message
+
+	</div>
+}

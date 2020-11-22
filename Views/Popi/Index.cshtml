@@ -1,0 +1,57 @@
+﻿@using Peoples.Enums
+@model Peoples.Dtos.DataSourceData
+
+@{
+	ViewBag.Title = "Verify processed file";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Verify processed file</h2>
+@* <p> *@
+@* 	@Html.ActionLink( "NEW MOVIE", "New", "Movies", new { @class = "btn btn-primary" } ) *@
+@* </p> *@
+
+@if ( Model == null || !Model.FieldRows.Any( ) )
+{
+	<p>Imported file did not contain any data.</p>
+}
+else
+{
+	using ( Html.BeginForm( "Save", "Popi" ) )
+	{
+		@Html.HiddenFor( m => m.DataStoreName )
+		@Html.HiddenFor( m => m.DataStoreType )
+		@Html.HiddenFor( m => m.DataStoreLocation )
+		@Html.HiddenFor( m => m.DataStoreTabName )
+
+		<table id="popiTable" class="table table-bordered table-hover">
+			<thead>
+			<tr>
+				@foreach ( var columnName in Model.ColumnsNames )
+				{
+					<th>@columnName</th>
+				}
+			</tr>
+			</thead>
+			<tbody>
+			@for ( int i = 0; i < Model.FieldRows.Count; i++ )
+			{
+				<tr>
+					@for ( var j = 0; j < Model.FieldRows[ i ].Fields.Count; j++ )
+					{
+						<td>
+							@Html.HiddenFor( m => m.FieldRows[ i ].Fields[ j ].Column )
+							@Html.HiddenFor( m => m.FieldRows[ i ].Fields[ j ].Row )
+							@Model.FieldRows[ i ].Fields[ j ].Value
+							@Html.DropDownListFor( m => m.FieldRows[ i ].Fields[ j ].Category,
+								EnumHelper.GetSelectList( typeof( Categories ), Model.FieldRows[ i ].Fields[ j ].Category ),
+								new { @class = "form-control" } )
+						</td>
+					}
+				</tr>
+			}
+			</tbody>
+		</table>
+		<button type="submit" class="btn btn-primary">Approve</button>
+	}
+}

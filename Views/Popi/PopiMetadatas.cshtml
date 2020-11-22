@@ -1,0 +1,60 @@
+﻿@model List<Peoples.Dtos.DataStoreDto>
+
+@{
+	ViewBag.Title = "Sensitive Data";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>POPI</h2>
+@* <p> *@
+@* 	@Html.ActionLink( "NEW MOVIE", "New", "Movies", new { @class = "btn btn-primary" } ) *@
+@* </p> *@
+
+@if ( !Model.Any( ) )
+{
+	<p>No data returned.</p>
+}
+else
+{
+	<table id="popiTable" class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th>Data Store</th>
+			<th>Data Store Type</th>
+			<th>Store Location</th>
+			<th>Table / Tab Name</th>
+			<th>Column</th>
+			<th>Row</th>
+			<th>Category</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach ( var row in Model )
+		{
+			<tr>
+				<td>
+					@row.DataStoreName
+				</td>
+				<td>
+					@row.DataStoreType
+				</td>
+				<td>
+					@row.DataStoreLocation
+				</td>
+				<td>
+					@row.TableTabName
+				</td>
+				<td>
+					@row.FieldName
+				</td>
+				<td>
+					@row.FieldRow
+				</td>
+				<td>
+					@row.Category
+				</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+}
