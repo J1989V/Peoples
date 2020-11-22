@@ -71,7 +71,7 @@ namespace Peoples.Controllers
 			{
 				case SignInStatus.Success:
 				{
-					TempData[ "signInStatus" ] = result.SignInStatus;
+					Session[ "signInStatus" ] = result.SignInStatus;
 					return RedirectToLocal( returnUrl );
 				}
 				case SignInStatus.LockedOut:

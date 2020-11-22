@@ -17,8 +17,8 @@ namespace Peoples.Controllers
 		public ActionResult UploadFile( )
 		{
 			SignInStatus signInStatus = SignInStatus.Failure;
-			if ( TempData[ "signInStatus" ] != null )
-				signInStatus = ( SignInStatus )TempData[ "signInStatus" ];
+			if ( Session[ "signInStatus" ] != null )
+				signInStatus = ( SignInStatus )Session[ "signInStatus" ];
 			
 			return View( signInStatus );
 		}

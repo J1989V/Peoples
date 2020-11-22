@@ -52,9 +52,9 @@ namespace Peoples.Controllers
 		{
 			List<DataStoreDto> dataStoreDto = new List<DataStoreDto>( );
 
-			if ( TempData[ "signInStatus" ] != null )
+			if ( Session[ "signInStatus" ] != null )
 			{
-				SignInStatus signInStatus = ( SignInStatus )TempData[ "signInStatus" ];
+				SignInStatus signInStatus = ( SignInStatus )Session[ "signInStatus" ];
 				if ( signInStatus == SignInStatus.Success )
 				{
 					ApiCaller apiCaller = new ApiCaller( );
