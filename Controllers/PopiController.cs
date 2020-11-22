@@ -4,7 +4,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Peoples.Classes;
 using Peoples.Dtos;
 using Peoples.Enums;
-using Peoples.Models;
 
 namespace Peoples.Controllers
 {
